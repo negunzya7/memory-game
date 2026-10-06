@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        .container {
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 800px;
+            height: 600px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .card {
+            background-image: url(template.jpeg);
+            background-size: cover;
+            width: 150px;
+            height: 200px;
+            /* perspective: 1000px; */
+            cursor: pointer;
+            border-radius: 20px;
+            /* background-image: radial-gradient(#1e293b 20%, transparent 20%); */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: transparent;
+            font-size: 35px;
+            /* transition: transform 0.8s; */
+            /* transform-style: preserve-3d; */
+            transition: all 1s;
+        }
+
+        .card-open {
+            color: black;
+        }
+
+        .img {
+            width: 1500px;
+            height: 900px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* .card:hover {
+            transform: rotateY(180deg);
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="img" style="background-image: url(minecra.jpg);">
+        <div class="container" id="container"></div>
+    </div>
+    <script>
+        const shapes = ["💎", "⛏️", "💸", "🛏️", "🏴‍☠️", "🪎"]
+        const cards = [];
+
+        for (let i = 0; i < shapes.length; i++) {
+            cards.push(shapes[i]);
+            cards.push(shapes[i]);
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length;
+            while (currentIndex != 0) {
+                let randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+        }
+
+        shuffle(cards);
+
+        function startGame() {
+            let result = ""
+            for (let i = 0; i < cards.length; i++) {
+                result += `<div class="card" id="card${i}" onclick="reveal(${i})">${cards[i]}</div>`;
+            }
+            document.getElementById("container").innerHTML = result;
+        }
+
+        startGame();
+
+        function reveal(index) {
+            const card = document.getElementById(`card${index}`);
+            if (card.classList.contains("card-open")) {
+                card.classList.remove("card-open")
+            } else {
+                card.classList.add("card-open")
+            }
+
+        }
+    </script>
+</body>
+
+</html>
